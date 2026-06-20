@@ -5,3 +5,9 @@
 **/secring.*
 .DS_Store
 *.swp
+CLAUDE.md
+
+home/.config/zsh/.zcompdump
+home/.config/zsh/.zsh_sessions/
+home/.config/zed/prompts/
+home/.config/raycast/
