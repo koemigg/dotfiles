@@ -1,0 +1,19 @@
+# macOS / OS
+.DS_Store
+.AppleDouble
+Thumbs.db
+
+# エディタ
+*.swp
+*~
+.idea/
+
+# direnv
+.envrc
+
+# ctags
+tags
+TAGS
+
+# Claude Code のローカル設定
+**/.claude/settings.local.json

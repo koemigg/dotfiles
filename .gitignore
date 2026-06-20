@@ -1,0 +1,7 @@
+**/.ssh/id_*
+**/.ssh/*.pem
+**/.ssh/known_hosts*
+**/*.gpg
+**/secring.*
+.DS_Store
+*.swp

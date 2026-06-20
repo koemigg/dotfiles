@@ -1,0 +1,45 @@
+[user]
+	name = koemigg
+	email = reg@koemigg.com
+[init]
+	defaultBranch = main
+[column]
+	ui = auto
+[pull]
+	ff = only
+[push]
+	autoSetupRemote = true
+	followTags = true        # push 時にタグも一緒に送る
+[fetch]
+	prune = true             # 消えたリモートブランチを自動で掃除
+	pruneTags = true
+[rebase]
+	autostash = true         # rebase 前に自動 stash
+[diff]
+	algorithm = histogram    # より読みやすい差分アルゴリズム
+	renames = true           # リネームを検出
+	colorMoved = default     # 移動した行を色分け
+[merge]
+	conflictstyle = zdiff3   # コンフリクト表示を分かりやすく
+[core]
+	autocrlf = false
+	pager = delta            # 差分表示に delta を使う
+	excludesfile = ~/.config/git/ignore
+[color]
+	ui = auto
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true          # n / N で差分間を移動
+	line-numbers = true
+	side-by-side = true       # 左右 2 画面で差分表示
+[alias]
+	s = status
+	pushf = push --force-with-lease
+	# マージ済みかつリモートで消えたローカルブランチを一括削除
+	sweep = "!git fetch --prune && git branch -vv | awk '/: gone]/{print $1}' | xargs -r git branch -D"
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
