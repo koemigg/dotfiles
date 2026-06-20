@@ -57,41 +57,6 @@ RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%b'
 
 # ------------------------------------------------------------------
-# fzf
-#   公式のキーバインド/補完を有効化（Ctrl-R 履歴 / Ctrl-T ファイル / Alt-C cd）
-# ------------------------------------------------------------------
-export FZF_DEFAULT_OPTS='--layout=reverse --border --height 60%'
-source <(fzf --zsh)
-
-# Ctrl-S を fzf に使うため、端末のフロー制御（XOFF）を無効化
-stty stop undef
-
-# Ctrl-J: ack で全文検索し、ヒット箇所を bat でプレビュー
-function fzf-ack-search() {
-  ack "$@" . | fzf --preview $'echo {} | awk -F ":" \'{print $1 " -r " $2 ":" " -H " $2}\' | xargs bat --color=always' | awk -F ":" '{print $1 " -H " $2}' | xargs bat --color=always
-  zle clear-screen
-}
-zle -N fzf-ack-search
-bindkey '^j' fzf-ack-search
-
-# Ctrl-S: ホーム以下のディレクトリ + コマンド履歴を横断検索
-#   cd 候補を選べば移動、コマンド履歴を選べば行に展開
-function fzf_any_search() {
-  local fdpath='fd . ~ --full-path --type d --exclude debug --exclude Library | sed -e "s/^/cd /"'
-  local history='\history -n 1 | sort | uniq | grep -v "cd" | tail -r'
-  local result=$({ eval "$fdpath" ; eval "$history" ; } | fzf --query "$LBUFFER")
-  if [[ "$result" =~ ^cd ]]; then
-    eval "$result"
-    zle clear-screen
-  else
-    BUFFER="$result"
-    zle clear-screen
-  fi
-}
-zle -N fzf_any_search
-bindkey '^s' fzf_any_search
-
-# ------------------------------------------------------------------
 # mise (node / ruby のバージョン管理。設定は ~/.config/mise/config.toml)
 # ------------------------------------------------------------------
 eval "$(mise activate zsh)"
